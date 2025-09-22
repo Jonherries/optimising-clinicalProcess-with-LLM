@@ -29,9 +29,9 @@ function App() {
   const [isHtmlContent, setIsHtmlContent] = useState(false);
   
   const client = new AzureOpenAI({
-    endpoint: "https://dev-tuhi-clinicalnotesynthesis.openai.azure.com",
-    apiVersion: "2024-05-01-preview",
-    apiKey: "149096a4341942e186e76793d516c568",
+    endpoint: import.meta.env.VITE_AZURE_OPENAI_ENDPOINT || "https://dev-tuhi-clinicalnotesynthesis.openai.azure.com",
+    apiVersion: import.meta.env.VITE_AZURE_OPENAI_API_VERSION || "2024-05-01-preview",
+    apiKey: import.meta.env.VITE_AZURE_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true
   });
 
@@ -45,10 +45,10 @@ function App() {
   const fetchAssistants = async () => {
     try {
       const response = await fetch(
-        `https://dev-tuhi-clinicalnotesynthesis.openai.azure.com/openai/assistants?api-version=${client.apiVersion}`,
+        `${import.meta.env.VITE_AZURE_OPENAI_ENDPOINT || "https://dev-tuhi-clinicalnotesynthesis.openai.azure.com"}/openai/assistants?api-version=${client.apiVersion}`,
         {
           headers: {
-            'api-key': client.apiKey,
+            'api-key': import.meta.env.VITE_AZURE_OPENAI_API_KEY,
             'Content-Type': 'application/json'
           },
         }
